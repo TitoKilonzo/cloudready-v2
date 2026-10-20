@@ -51,6 +51,8 @@ The easiest deployment is a Node host that runs the Express API and serves the V
 7. Leave demo account seeding disabled for normal production use. For a controlled demo, set `ENABLE_DEMO_ACCOUNT=true` plus a unique `DEMO_ACCOUNT_EMAIL` and strong `DEMO_ACCOUNT_PASSWORD` in the hosting environment. Do not reuse the documented local demo password in production.
 8. Install dependencies with `npm ci` after committing a lockfile, build with `npm run build`, then start with `npm start`.
 
+The API refuses to start in production if `JWT_SECRET` is missing.
+
 If deploying the frontend and API separately, deploy the `dist` directory to your static host and the Express server to a Node host. Configure the frontend `/api` requests to reach the API using your platform's rewrite or proxy configuration. Keep all secrets in the server environment, never in Vite variables.
 
 ## API routes

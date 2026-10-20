@@ -5,7 +5,8 @@ CloudReady is an independent study companion for learners preparing for cloud fu
 ## Included
 
 * Public pages for Home, About, Contact, Resources, and a study tools dropdown
-* Sign up and sign in pages with a Back home link
+* Sign up and sign in pages with a Back home link and no public page navigation
+* Account-gated learner portal with navigation for practice, flashcards, planning, progress, and the study assistant
 * Local demo account is created automatically during development startup
 * Practice quiz with answer explanations
 * Flashcards and a weekly study planner
@@ -24,7 +25,7 @@ Node.js 20 or later and npm.
 1. Copy `.env.example` to `.env`.
 2. Leave `TURSO_DATABASE_URL=file:./cloudready.db` for a local database, or use a Turso database URL and token.
 3. Set `JWT_SECRET` to a long random value.
-4. Set `OPENAI_API_KEY` to enable live study assistant responses. The AI key is used only on the server. Without it, the assistant returns a configuration message instead of fabricated content.
+4. Set `OPENAI_API_KEY` to enable live study assistant responses. The key is read only by the API server and is never included in the browser bundle or API responses. Without it, the assistant returns a configuration message instead of fabricated content.
 5. To enable the local demo account, copy the demo email and password from the section below into `DEMO_ACCOUNT_EMAIL` and `DEMO_ACCOUNT_PASSWORD` in `.env`. Do not add these values to frontend files.
 6. Run `npm install`.
 7. Run `npm run dev`.

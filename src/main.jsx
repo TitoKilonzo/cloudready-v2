@@ -117,7 +117,7 @@ function Assistant(){
  async function run(e){
   e.preventDefault();setBusy(true);setError('');setExportError('');setResult('');
   try{const token=localStorage.getItem('cr_token');const res=await fetch(`${API}/study/${mode}`,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify({topic,content:text})});const data=await res.json();if(!res.ok)throw new Error(data.error||'Unable to complete this request');setResult(data.result);}
-  catch(err){setError((err instanceof Error?err.message:'Unable to complete this request')+' Check that the API server is running and Groq is configured.');}
+  catch(err){setError(err instanceof TypeError?'Could not reach the API server. Check that it is running and try again.':err instanceof Error?err.message:'Unable to complete this request. Please try again.');}
   finally{setBusy(false);}
  }
  async function exportResult(format){

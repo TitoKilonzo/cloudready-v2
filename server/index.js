@@ -29,6 +29,7 @@ app.get('/api/plan',auth,async(req,res)=>{const result=await db.execute({sql:'SE
 app.put('/api/plan',auth,async(req,res)=>{const date=String(req.body.targetDate||'').slice(0,10),minutes=Number(req.body.dailyMinutes);if(date&&!/^\d{4}-\d{2}-\d{2}$/.test(date))return res.status(400).json({error:'Enter a valid target date.'});if(![20,45,60,90].includes(minutes))return res.status(400).json({error:'Choose a supported daily study duration.'});await db.execute({sql:'INSERT INTO study_plans (user_id,target_date,daily_minutes,updated_at) VALUES (?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(user_id) DO UPDATE SET target_date=excluded.target_date,daily_minutes=excluded.daily_minutes,updated_at=CURRENT_TIMESTAMP',args:[Number(req.claims.sub),date||null,minutes]});res.json({saved:true});});
 app.post('/api/feedback',async(req,res)=>{const name=String(req.body.name||'').trim(),email=String(req.body.email||'').trim(),category=String(req.body.category||'General feedback').slice(0,80),message=String(req.body.message||'').trim();if(name.length<2||!/^\S+@\S+\.\S+$/.test(email)||message.length<5||message.length>5000)return res.status(400).json({error:'Check the name, email, and message fields.'});await db.execute({sql:'INSERT INTO feedback (name,email,category,message) VALUES (?,?,?,?)',args:[name,email,category,message]});res.status(201).json({saved:true});});
 const groq=process.env.GROQ_API_KEY?new OpenAI({apiKey:process.env.GROQ_API_KEY,baseURL:'https://api.groq.com/openai/v1'}):null;
+const groqModel=process.env.GROQ_MODEL||'openai/gpt-oss-120b';
 app.post('/api/study/:mode',async(req,res)=>{
  const mode=req.params.mode;
  if(!['summary','research'].includes(mode))return res.status(404).json({error:'Unknown study task.'});
@@ -42,13 +43,21 @@ app.post('/api/study/:mode',async(req,res)=>{
   ?`Summarize these study notes for revision.\n\n${content}`
   :`Research topic: ${topic||'Cloud fundamentals'}\nLearner context and specific question: ${content}\nProvide a beginner friendly overview, key terms, a practical example, common misunderstandings, and questions for further study.`;
  try{
-  const response=await groq.chat.completions.create({model:process.env.GROQ_MODEL||'llama-3.3-70b-versatile',messages:[{role:'system',content:system},{role:'user',content:user}],temperature:0.3,max_tokens:1400});
+   const response=await groq.chat.completions.create({model:groqModel,messages:[{role:'system',content:system},{role:'user',content:user}],temperature:0.3,max_tokens:1400});
   res.json({result:response.choices[0]?.message?.content||'No result was returned.'});
  }catch(error){
-  console.error('Study assistant error:',error.message);
-  if(error.status===401||error.status===403)return res.status(502).json({error:'Groq rejected the configured API key or account permissions. Verify GROQ_API_KEY and Groq account access.'});
-  res.status(502).json({error:'The study assistant could not complete this request. Check the Groq model and try again.'});
- }
+   const status=Number(error.status)||0,code=String(error.code||'').toLowerCase(),message=String(error.message||'').toLowerCase();
+   console.error('Study assistant error:',{status,code});
+   if(status===401||status===403)return res.status(502).json({error:'Groq rejected the configured API key or account permissions. Verify GROQ_API_KEY and Groq account access.'});
+   if(status===400||status===404){
+    if(code.includes('model')||message.includes('model')||message.includes('decommission'))return res.status(502).json({error:`The configured Groq model "${groqModel}" is unavailable. Set GROQ_MODEL to an active model in the server environment and restart the API.`});
+    return res.status(502).json({error:'Groq rejected the request. Check the request settings and configured model.'});
+   }
+   if(status===429)return res.status(502).json({error:'Groq rate or usage limits were reached. Wait and try again, or check your Groq account limits.'});
+   if(status>=500)return res.status(502).json({error:'Groq is temporarily unavailable. Please try again shortly.'});
+   if(!status)return res.status(502).json({error:'The server could not connect to Groq. Check the server network connection and try again.'});
+   res.status(502).json({error:'The study assistant request failed. Check the Groq server configuration and try again.'});
+  }
 });
 app.use((err,req,res,next)=>{if(!req.path.startsWith('/api/'))return next(err);if(res.headersSent)return next(err);const status=Number(err.status)||500;if(status>=500)console.error(`API ${req.method} ${req.path} error:`,err.message);res.status(status).json({error:status>=500?'The server could not complete this request. Please try again.':err.message||'The request is invalid.'});});
 const __dirname=path.dirname(fileURLToPath(import.meta.url));const dist=path.resolve(__dirname,'../dist');if(process.env.NODE_ENV==='production'){app.use(express.static(dist));app.get('/{*path}',(req,res)=>res.sendFile(path.join(dist,'index.html')));}

@@ -25,7 +25,7 @@ Node.js 20 or later and npm.
 1. Copy `.env.example` to `.env`.
 2. Leave `TURSO_DATABASE_URL=file:./cloudready.db` for a local database, or use a Turso database URL and token.
 3. Set `JWT_SECRET` to a long random value.
-4. Set `GROQ_API_KEY` to enable study assistant responses through Groq. Optionally set `GROQ_MODEL`; the default is `llama-3.3-70b-versatile`.
+4. Set `GROQ_API_KEY` to enable study assistant responses through Groq. Optionally set `GROQ_MODEL`; the default is `openai/gpt-oss-120b`.
 5. To enable the local demo account, copy the demo email and password from the section below into `DEMO_ACCOUNT_EMAIL` and `DEMO_ACCOUNT_PASSWORD` in `.env`. Do not add these values to frontend files.
 6. Run `npm install`.
 7. Run `npm run dev`.
@@ -46,7 +46,7 @@ The easiest deployment is a Node host that runs the Express API and serves the V
 2. Set `TURSO_DATABASE_URL` to the database URL from Turso.
 3. Set `TURSO_AUTH_TOKEN` to the database token.
 4. Set `JWT_SECRET` to a secure random secret.
-5. Set `GROQ_API_KEY` and optionally `GROQ_MODEL` to enable study assistant features.
+5. Set `GROQ_API_KEY` and optionally `GROQ_MODEL` to enable study assistant features. Use a currently active Groq model ID.
 6. Set `CLIENT_ORIGIN` to the trusted frontend origin when frontend and API are separate.
 7. Leave demo account seeding disabled for normal production use. For a controlled demo, set `ENABLE_DEMO_ACCOUNT=true` plus a unique `DEMO_ACCOUNT_EMAIL` and strong `DEMO_ACCOUNT_PASSWORD` in the hosting environment. Do not reuse the documented local demo password in production.
 8. Install dependencies with `npm ci` after committing a lockfile, build with `npm run build`, then start with `npm start`.

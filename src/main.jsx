@@ -5,6 +5,7 @@ import{BookOpen,Brain,ChartNoAxesColumnIncreasing,ChevronDown,ChevronRight,Cloud
 import'./style.css';
 import'./portal.css';
 import'./polish.css';
+import'./theme.css';
 const API='/api';
 const reduceMotion=()=>typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pageTitles={'/':'Home','/about':'About','/contact':'Contact','/resources':'Resources','/signin':'Sign in','/signup':'Create account','/quiz':'Practice quiz','/flashcards':'Flashcards','/planner':'Study planner','/progress':'Progress','/assistant':'Study assistant'};

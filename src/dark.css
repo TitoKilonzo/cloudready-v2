@@ -1,0 +1,256 @@
+/* ==========================================================================
+   CloudReady DARK THEME (self-contained)
+   Active when <html data-theme="dark">. Light styles are untouched: every rule
+   here is scoped under html[data-theme='dark'] and overrides the light value
+   directly, so this one file is all the dark theme needs.
+
+   Palette: deep indigo-black surfaces, lilac accents.
+   Text pairs (checked): ink 14.7:1, soft ink 11.3:1, muted 7.4:1, accent 7.8:1,
+   white on primary button 5.0:1, status text >= 8:1 on their tints.
+   ========================================================================== */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  background: #0f1020;
+  color: #eceafc;
+  --ink: #eceafc;
+  --muted: #a7a5cb;
+  --placeholder: #9593b8;
+  --line: #2a2b52;
+  --line-strong: #3d3e7a;
+  --white: #171830;
+  --surface: #171830;
+  --lilac: #25264b;
+  --lilac2: #33346a;
+  --indigo: #6358f0;
+  --indigo2: #4f44d8;
+  --focus-ring: #b6b0ff;
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+  --ok: #7fe0bd;
+  --ok-bg: #12332b;
+  --ok-line: #2f8a6c;
+  --warn: #f0c58e;
+  --warn-bg: #382a16;
+  --err: #ffa3b4;
+  --err-bg: #3a1620;
+  --err-line: #7a2f40;
+}
+html[data-theme='dark'] body { background: #0f1020; color: #eceafc; }
+html[data-theme='dark'] .topbar { background: rgba(15, 16, 32, 0.88); }
+html[data-theme='dark'] .portalTopbar { background: #121328; }
+html[data-theme='dark'] ::selection { background: #4a3fd9; color: #fff; }
+
+/* gradients and artwork */
+html[data-theme='dark'] .orbOne { background: radial-gradient(circle at 30% 25%, #34346e, #262658 48%, #1a1a3a 72%); }
+html[data-theme='dark'] .orbTwo { background: radial-gradient(circle, #2c2c63, #171832); }
+html[data-theme='dark'] .featureBand { background: linear-gradient(115deg, #1a1a3c, #14152d 55%, #20204a); }
+html[data-theme='dark'] .flashCard { background: linear-gradient(135deg, #1b1c38, #25264b); border-color: #34356b; }
+html[data-theme='dark'] .flashCard.revealed { background: linear-gradient(135deg, #2b2c58, #1b1c38); }
+html[data-theme='dark'] .authWrap { background: radial-gradient(ellipse at 50% 0, #25264b 0, transparent 58%), #0f1020; }
+html[data-theme='dark'] .scoreCircle { background: radial-gradient(closest-side, #171830 80%, transparent 82%), conic-gradient(var(--indigo) 0 var(--p, 72%), #33346a var(--p, 72%) 100%); }
+html[data-theme='dark'] .portalNav { background: linear-gradient(180deg, #2b2570 0%, #1a1750 100%); box-shadow: 8px 0 26px rgba(0, 0, 0, 0.4); }
+html[data-theme='dark'] .authAside { background: linear-gradient(150deg, #2e2878 0%, #211c5c 58%, #181444 100%); }
+html[data-theme='dark'] .portalBackdrop { background: rgba(5, 6, 18, 0.72); }
+html[data-theme='dark'] .cmdBackdrop { background: rgba(5, 6, 18, 0.66); }
+html[data-theme='dark'] .cmdPanel { background: #171830; border-color: #34356b; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); }
+
+/* dedicated dark illustration (public/cloudready-learning-dark.svg) */
+html[data-theme='dark'] .heroVisual { background-image: none; }
+html[data-theme='dark'] .heroVisual::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url('/cloudready-learning-dark.svg') center / contain no-repeat; }
+html[data-theme='dark'] .lightOnly { display: none; }
+html[data-theme='dark'] .darkOnly { display: block; }
+@media (max-width: 760px) { html[data-theme='dark'] .heroVisual::before { background-size: cover; } html[data-theme='dark'] .darkOnly { display: none; } }
+
+/* shadows read as glow on dark: flatten the card ones, deepen the floating ones */
+html[data-theme='dark'] .stats, html[data-theme='dark'] .cta, html[data-theme='dark'] .contentCard, html[data-theme='dark'] .formCard,
+html[data-theme='dark'] .planPreview, html[data-theme='dark'] .assistantIntro, html[data-theme='dark'] .reportCard { box-shadow: none; }
+html[data-theme='dark'] .cloudPanel, html[data-theme='dark'] .floatingCard { box-shadow: 0 24px 65px rgba(0, 0, 0, 0.5); }
+html[data-theme='dark'] .brandmark { box-shadow: 0 7px 16px rgba(0, 0, 0, 0.35); }
+
+/* semantic states that use white text on a tinted fill */
+html[data-theme='dark'] .option.correct > span { background: #23795d; color: #fff; }
+html[data-theme='dark'] .option.wrong > span { background: #b8455c; color: #fff; }
+html[data-theme='dark'] .option.correct { border-color: #2f8a6c; background: #12332b; color: #7fe0bd; }
+html[data-theme='dark'] .option.wrong { border-color: #7a2f40; background: #3a1620; color: #ffa3b4; }
+html[data-theme='dark'] .option.selected:not(.correct):not(.wrong) { border-color: #6a60dc; background: #1d1e3d; }
+html[data-theme='dark'] .cmdItem[aria-selected='true'] { background: #25264b; }
+html[data-theme='dark'] .cmdItem[aria-selected='true'] .cmdIcon { background: #6358f0; color: #fff; }
+html[data-theme='dark'] .flashDots button.active::before { background: #8d84ff; }
+html[data-theme='dark'] .progressTrack i { background: #8d84ff; }
+html[data-theme='dark'] .quoteMark { color: #8d84ff; }
+html[data-theme='dark'] .successInline, html[data-theme='dark'] .successState > svg { color: #62d3aa; }
+
+/* ==========================================================================
+   DERIVED OVERRIDES
+   Generated from style.css, portal.css and polish.css (light value -> dark
+   value for every background, text colour and border). Regenerate with
+   tools/gen-dark.py if you change light colours (it writes the derived part; paste it between the markers).
+   ========================================================================== */
+/* --- derived from src/style.css --- */
+html[data-theme='dark'] .topbar { border-bottom: 1px solid #2a2b52; }
+html[data-theme='dark'] .nav>a.active,
+html[data-theme='dark'] .nav>a:hover,
+html[data-theme='dark'] .navDrop>button:hover { color: #aaa3ff; }
+html[data-theme='dark'] .dropMenu { background: #171830; }
+html[data-theme='dark'] .dropMenu a:hover { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .signin { color: #cfcdee; }
+html[data-theme='dark'] .userPill { background: #25264b; }
+html[data-theme='dark'] .iconBtn { color: #aaa3ff; }
+html[data-theme='dark'] .btn.secondary { background: #171830; color: #aaa3ff; border-color: #2a2b52; }
+html[data-theme='dark'] .btn.secondary:hover { background: #1d1e3d; }
+html[data-theme='dark'] .eyebrow { color: #aaa3ff; }
+html[data-theme='dark'] .hero h1,
+html[data-theme='dark'] .pageHero h1 { color: #eceafc; }
+html[data-theme='dark'] .hero h1 em,
+html[data-theme='dark'] .pageHero h1 em,
+html[data-theme='dark'] .featureInner h2 em { color: #aaa3ff; }
+html[data-theme='dark'] .avatars span { border: 2px solid #2e2f5a; background: #2c2a63; color: #aaa3ff; }
+html[data-theme='dark'] .avatars span:nth-child(2) { background: #15362d; color: #6fd8b0; }
+html[data-theme='dark'] .avatars span:nth-child(3) { background: #3b2719; color: #f0a982; }
+html[data-theme='dark'] .cloudPanel { background: #171830ed; border: 1px solid #2e2f5a; }
+html[data-theme='dark'] .miniIcon { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .scoreCircle strong { color: #eceafc; }
+html[data-theme='dark'] .miniBars b { color: #aaa3ff; }
+html[data-theme='dark'] .bar { background: #25264b; }
+html[data-theme='dark'] .panelFoot { border-top: 1px solid #2a2b52; }
+html[data-theme='dark'] .floatingCard { background: #171830; border: 1px solid #2a2b52; }
+html[data-theme='dark'] .floatIcon { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .stats { background: #171830; }
+html[data-theme='dark'] .stat>span { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .stat b { color: #eceafc; }
+html[data-theme='dark'] .sectionHead h2,
+html[data-theme='dark'] .section>h2 { color: #eceafc; }
+html[data-theme='dark'] .textLink { color: #aaa3ff; }
+html[data-theme='dark'] .toolCard,
+html[data-theme='dark'] .topicCard,
+html[data-theme='dark'] .resourceCard { background: #171830; }
+html[data-theme='dark'] .toolCard:hover,
+html[data-theme='dark'] .topicCard:hover,
+html[data-theme='dark'] .resourceCard:hover { border-color: #3d3e7a; }
+html[data-theme='dark'] .toolIcon,
+html[data-theme='dark'] .topicIcon,
+html[data-theme='dark'] .resourceIcon,
+html[data-theme='dark'] .largeIcon { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .toolCard h3,
+html[data-theme='dark'] .topicCard h3,
+html[data-theme='dark'] .resourceCard h3 { color: #eceafc; }
+html[data-theme='dark'] .toolCard>a,
+html[data-theme='dark'] .resourceCard>a { color: #aaa3ff; }
+html[data-theme='dark'] .whiteBtn { background: #171830; color: #aaa3ff; border: 1px solid #2a2b52; }
+html[data-theme='dark'] .featureQuote { border-left: 2px solid #6a60dc; }
+html[data-theme='dark'] .featureQuote p { color: #cfcdee; }
+html[data-theme='dark'] .ti1 { background: #25264b; color: #b9a2ff; }
+html[data-theme='dark'] .ti2 { background: #14362c; color: #62d3aa; }
+html[data-theme='dark'] .ti3 { background: #3a2616; color: #f2a66a; }
+html[data-theme='dark'] .topicBottom { border-top: 1px solid #2a2b52; color: #aaa3ff; }
+html[data-theme='dark'] .cta { background: #171830; }
+html[data-theme='dark'] .ctaIcon { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .contentCard,
+html[data-theme='dark'] .formCard,
+html[data-theme='dark'] .planPreview,
+html[data-theme='dark'] .assistantIntro,
+html[data-theme='dark'] .reportCard { background: #171830; }
+html[data-theme='dark'] .principleGrid>div { border-top: 2px solid #6a60dc; background: #171830; }
+html[data-theme='dark'] .principleGrid b { color: #aaa3ff; }
+html[data-theme='dark'] .contactNote,
+html[data-theme='dark'] .noteBox { background: #1d1e3d; color: #cfcdee; }
+html[data-theme='dark'] .contactNote svg,
+html[data-theme='dark'] .noteBox svg { color: #aaa3ff; }
+html[data-theme='dark'] .formCard label { color: #cfcdee; }
+html[data-theme='dark'] .formCard input,
+html[data-theme='dark'] .formCard textarea,
+html[data-theme='dark'] .formCard select { border: 1px solid #2a2b52; background: #1c1d3a; }
+html[data-theme='dark'] .formCard input:focus,
+html[data-theme='dark'] .formCard textarea:focus,
+html[data-theme='dark'] .formCard select:focus,
+html[data-theme='dark'] .searchBox input:focus { border-color: #6a60dc; box-shadow: 0 0 0 3px rgba(170,163,255,.28); }
+html[data-theme='dark'] .successState>svg { color: #62d3aa; }
+html[data-theme='dark'] .searchBox { background: #171830; color: #aaa3ff; }
+html[data-theme='dark'] .resourceCard small { color: #aaa3ff; }
+html[data-theme='dark'] .authCard { background: #171830; }
+html[data-theme='dark'] .backHome:hover { color: #aaa3ff; }
+html[data-theme='dark'] .authSwitch a { color: #aaa3ff; }
+html[data-theme='dark'] .demoBox { background: #1d1e3d; border: 1px solid #2a2b52; color: #aaa3ff; }
+html[data-theme='dark'] .demoBox button { background: #171830; color: #aaa3ff; }
+html[data-theme='dark'] .errorBox { background: #3a1620; color: #ffa3b4; border: 1px solid #7a2f40; }
+html[data-theme='dark'] .progressTrack { background: #33346a; }
+html[data-theme='dark'] .quizCard,
+html[data-theme='dark'] .resultCard { background: #171830; }
+html[data-theme='dark'] .option { background: #171830; color: #cfcdee; }
+html[data-theme='dark'] .option>span { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .option svg { color: #aaa3ff; }
+html[data-theme='dark'] .option.selected { border-color: #6a60dc; background: #1d1e3d; }
+html[data-theme='dark'] .answerExplain.correct { background: #12332b; color: #7fe0bd; }
+html[data-theme='dark'] .answerExplain.incorrect { background: #382a16; color: #f0c58e; }
+html[data-theme='dark'] .resultScore { color: #aaa3ff; }
+html[data-theme='dark'] .flashCard { border: 1px solid #2a2b52; }
+html[data-theme='dark'] .flashLabel { color: #aaa3ff; }
+html[data-theme='dark'] .flashDots button { background: #43448a; }
+html[data-theme='dark'] .planRow { border-top: 1px solid #2a2b52; }
+html[data-theme='dark'] .planRow>span { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .planRow>svg { color: #8d84ff; }
+html[data-theme='dark'] .successInline { color: #62d3aa; }
+html[data-theme='dark'] .progressCards { background: #171830; }
+html[data-theme='dark'] .masteryRow b { color: #aaa3ff; }
+html[data-theme='dark'] .mode { background: #171830; }
+html[data-theme='dark'] .mode.active { background: #25264b; border-color: #3d3e7a; color: #aaa3ff; }
+html[data-theme='dark'] .aiResult { border: 1px solid #3d3e7a; background: #1c1d3a; }
+html[data-theme='dark'] .resultText { color: #cfcdee; }
+@media(max-width:760px) {
+  html[data-theme='dark'] .nav { background: #171830; }
+  html[data-theme='dark'] .userPillMobile { background: #25264b; color: #aaa3ff; }
+}
+html[data-theme='dark'] .stats { background: #171830; }
+/* --- derived from src/portal.css --- */
+html[data-theme='dark'] .authHome { color: #aaa3ff; }
+html[data-theme='dark'] .authHome:hover { color: #c9c4ff; }
+html[data-theme='dark'] .portalTopbar { background: #171830; }
+html[data-theme='dark'] .portalHeaderTitle { color: #cfcdee; }
+html[data-theme='dark'] .portalNav>a.active:not(.portalBrand) { background: #171830; color: #c9c4ff; }
+html[data-theme='dark'] .authAsideBrand .brandmark { color: #aaa3ff; background: #171830; }
+html[data-theme='dark'] .authFormPanel { background: #171830; }
+html[data-theme='dark'] .authKicker { color: #aaa3ff; }
+html[data-theme='dark'] .authFormHead h1 { color: #eceafc; }
+html[data-theme='dark'] .authForm>label { color: #cfcdee; }
+html[data-theme='dark'] .authInputWrap { border: 1px solid #2a2b52; background: #1c1d3a; }
+html[data-theme='dark'] .authInputWrap:focus-within { border-color: #8d84ff; background: #171830; box-shadow: 0 0 0 3px rgba(170,163,255,.28); }
+html[data-theme='dark'] .authInputWrap input::placeholder { color: #9593b8; }
+html[data-theme='dark'] .sessionError { border: 1px solid #7a2f40; background: #3a1620; color: #ffa3b4; }
+/* --- derived from src/polish.css --- */
+html[data-theme='dark'] .portalNav a:focus-visible { outline-color: #2e2f5a; }
+html[data-theme='dark'] .skipLink:focus { outline-color: #2e2f5a; }
+html[data-theme='dark'] .flashDots button::before { background: #43448a; }
+html[data-theme='dark'] .option.correct { border-color: #2f8a6c; color: #7fe0bd; }
+html[data-theme='dark'] .option.correct .optionMark { color: #7fe0bd; }
+html[data-theme='dark'] .option.wrong { border-color: #7a2f40; color: #ffa3b4; }
+html[data-theme='dark'] .option.wrong .optionMark { color: #ffa3b4; }
+html[data-theme='dark'] .answerExplain.correct { color: #7fe0bd; }
+html[data-theme='dark'] .answerExplain.incorrect { color: #f0c58e; }
+html[data-theme='dark'] .errorBox { color: #ffa3b4; }
+html[data-theme='dark'] .sessionChecking .spinner { color: #aaa3ff; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme='dark'] .toolCard:hover,
+  html[data-theme='dark'] .topicCard:hover,
+  html[data-theme='dark'] .resourceCard:hover { border-color: #3d3e7a; }
+  html[data-theme='dark'] .option:not([aria-disabled='true']):hover { border-color: #6a60dc; background: #1d1e3d; }
+  html[data-theme='dark'] .pwToggle:hover,
+  html[data-theme='dark'] .iconBtn:hover { color: #c9c4ff; background: #25264b; }
+  html[data-theme='dark'] .flashDots button:hover::before { background: #6a60dc; }
+}
+html[data-theme='dark'] .themeToggle,
+html[data-theme='dark'] .paletteBtn { color: #aaa3ff; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme='dark'] .themeToggle:hover,
+  html[data-theme='dark'] .paletteBtn:hover { background: #25264b; }
+}
+@media (min-width: 761px) and (hover: hover) {
+  html[data-theme='dark'] .pinBtn:focus-visible { outline-color: #2e2f5a; }
+}
+html[data-theme='dark'] .cmdInputRow { color: #aaa3ff; }
+html[data-theme='dark'] .cmdItem .cmdIcon { background: #25264b; color: #aaa3ff; }
+html[data-theme='dark'] .cmdItem[aria-selected='true'] { background: #25264b; }
+
+/* ==========================================================================
+   FINAL OVERRIDES (must stay last: they win over the derived rules above)
+   ========================================================================== */
+html[data-theme='dark'] .nav.portalNav,
+html[data-theme='dark'] .portalTopbar .portalNav { background: linear-gradient(180deg, #2b2570 0%, #1a1750 100%); }
